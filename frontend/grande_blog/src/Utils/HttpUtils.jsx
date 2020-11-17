@@ -36,4 +36,14 @@ export async function getUserInfo(userInfoPath){
     }
 }
 
+export async function signUpUser(data){
+  try {
+    const response = await instance.post('users/', data);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 

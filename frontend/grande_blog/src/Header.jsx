@@ -32,10 +32,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function toSignUpPage(){
-
-}
-
 export default function Header(props) {
   const classes = useStyles();
   const { sections, title } = props;
@@ -43,12 +39,11 @@ export default function Header(props) {
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
-        <Button size="small">Subscribe</Button>
         <Typography
-          component="h2"
-          variant="h5"
+          component="h1"
+          variant="h3"
           color="inherit"
-          align="center"
+          // align="center"
           noWrap
           className={classes.toolbarTitle}
         >
@@ -57,9 +52,14 @@ export default function Header(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-        <Link to='/signup'>
+        <Link to='/signup' className={classes.toolbarLink}>
         <Button variant="outlined" size="small">
           Sign up
+        </Button>
+        </Link>
+        <Link to='/signin'>
+        <Button variant="outlined" size="small">
+          Sign In
         </Button>
         </Link>
       </Toolbar>
