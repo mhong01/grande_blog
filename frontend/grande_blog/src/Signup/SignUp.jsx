@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import SignUpService from './SignUpService';
 import { useState } from 'react';
+import { connect } from "react-redux";
 
 function Copyright() {
   return (
@@ -47,8 +48,18 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     loginSuccess: value => dispatch(loginSuccess(value))
+//   };
+// }
+// const SignUp = connect(
+//   null,
+//   mapDispatchToProps
+// )(SignUpComp);
 
-export default function SignUp() {
+
+function SignUp(props) {
   const classes = useStyles();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -58,7 +69,6 @@ export default function SignUp() {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log('dd');
     let user = {
       firstName: firstName,
       lastName: lastName, 
@@ -66,7 +76,7 @@ export default function SignUp() {
       password: password
     }
     let data = JSON.stringify(user);
-    new SignUpService().signUpUser(data);
+    let result = new SignUpService().signUpUser(data);
   }
 
   return (
@@ -163,3 +173,5 @@ export default function SignUp() {
     </Container>
   );
 }
+
+export default SignUp;

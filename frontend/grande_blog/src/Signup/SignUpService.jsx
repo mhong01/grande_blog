@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
 import { getUser, getUsers, signUpUser } from '../Utils/HttpUtils';
-import SignUp from './SignUp';
+import {loginSuccess, loginFailed} from '../ReduxActions/Actions';
+import { connect } from "react-redux";
 
-export default class SignUpService extends Component{
+function mapDispatchToProps(dispatch) {
+    return {
+      loginSuccess: value => dispatch(loginSuccess(value))
+    };
+  }
+
+class SignUpServiceComp extends Component{
     
     constructor(props){
         super(props);
@@ -14,6 +21,15 @@ export default class SignUpService extends Component{
             isLoggedIn : false,
             user: null,
         });
+        this.handleLogInStatusChange = this.handleLogInStatusChange.bind(this);
+    }
+
+    handleLogInStatusChange (data){
+        this.setState({
+            isLoggedIn: data
+        });
+        this.props.loginSuccess(data);
+        // this.setState({ title: "" });
     }
 
     async getAllUsers (){
@@ -27,7 +43,21 @@ export default class SignUpService extends Component{
     
     async signUpUser(data){
         let result = await signUpUser(data);
+        let isFailed = false;
         console.log(result);
+        if (result.data && result.data.id > -1){
+            this.handleLogInStatusChange(true);
+            return result.data;
+        }
+        this.handleLogInStatusChange(false);
+        return isFailed;
     }
     
 }
+
+const SignUpService = connect(
+    null,
+    mapDispatchToProps
+  )(SignUpServiceComp);
+  
+export default SignUpService;

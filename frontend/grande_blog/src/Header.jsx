@@ -6,6 +6,9 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
+import { connect } from "react-redux";
+import { useState, useEffect } from 'react';
+
 // import Link from '@material-ui/core/Link';
 import {
   BrowserRouter as Router,
@@ -13,6 +16,12 @@ import {
   Route,
   Link
 } from "react-router-dom";
+
+const mapStateToProps = state => {
+  return { isLoggedIn: state.isLoggedIn };
+};
+
+const Header = connect(mapStateToProps)(HeaderComponent);
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,12 +41,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header(props) {
+function HeaderComponent(props) {
   const classes = useStyles();
   const { sections, title } = props;
+  // const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   return (
     <React.Fragment>
+      {/* {props.isUserLoggedIn} */}
       <Toolbar className={classes.toolbar}>
         <Typography
           component="h1"
@@ -86,3 +97,5 @@ Header.propTypes = {
   sections: PropTypes.array,
   title: PropTypes.string,
 };
+
+export default Header;
